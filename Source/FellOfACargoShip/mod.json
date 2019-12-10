@@ -46,6 +46,6 @@
         "AddInventoryComponentCount": 10,
         "AddInventoryFunds": 3000000,
 
-        "LogComponentLists": true
+        "LogComponentLists": false
     }
 }
