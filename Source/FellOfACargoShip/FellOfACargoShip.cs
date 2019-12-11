@@ -42,7 +42,7 @@ namespace FellOfACargoShip
     }
 
     [HarmonyPatch(typeof(SimGameState), "_OnAttachUXComplete")]
-    public static class SimGameState__OnAttachUXComplete_Patch
+    public static class SimGameState__OnAttachUXComplete_Patch1
     {
         public static bool Prepare()
         {
@@ -268,10 +268,23 @@ namespace FellOfACargoShip
                     }
 
                     // Add Funds
-                    if (FellOfACargoShip.Settings.AddInventoryFunds > 0)
+                    if (FellOfACargoShip.Settings.AddFunds > 0)
                     {
-                        __instance.AddFunds(FellOfACargoShip.Settings.AddInventoryFunds, null, true);
-                        Logger.LogLine("[SimGameState__OnAttachUXComplete_POSTFIX] Added " + FellOfACargoShip.Settings.AddInventoryFunds + " C-Bills to inventory.");
+                        __instance.AddFunds(FellOfACargoShip.Settings.AddFunds, null, true);
+                        Logger.LogLine("[SimGameState__OnAttachUXComplete_POSTFIX] Added " + FellOfACargoShip.Settings.AddFunds + " C-Bills to inventory.");
+                    }
+
+                    // Add XP
+                    if (FellOfACargoShip.Settings.AddXP > 0)
+                    {
+                        __instance.Commander.AddExperience(0, "LittleThings.AddXP", FellOfACargoShip.Settings.AddXP);
+                        foreach (var item in __instance.PilotRoster.Select((value, i) => new { i, value }))
+                        {
+                            Pilot pilot = item.value;
+                            int index = item.i;
+
+                            pilot.AddExperience(index, "LittleThings.AddXP", FellOfACargoShip.Settings.AddXP);
+                        }
                     }
                 }
 
@@ -311,6 +324,48 @@ namespace FellOfACargoShip
                     }
                     Logger.LogLine("------------------------------");
                     Logger.LogLine("------------------------------------------------------------------------------------------------------------------------");
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.LogError(e);
+            }
+        }
+    }
+
+    [HarmonyPatch(typeof(SimGameState), "_OnAttachUXComplete")]
+    public static class SimGameState__OnAttachUXComplete_Patch2
+    {
+        public static bool Prepare()
+        {
+            return FellOfACargoShip.Settings.AddFunds > 0 || FellOfACargoShip.Settings.AddXP > 0;
+        }
+
+        public static void Postfix(SimGameState __instance)
+        {
+            try
+            {
+                // Add Funds
+                if (FellOfACargoShip.Settings.AddFunds > 0)
+                {
+                    __instance.AddFunds(FellOfACargoShip.Settings.AddFunds, null, true);
+                    Logger.LogLine("[SimGameState__OnAttachUXComplete_POSTFIX] Added " + FellOfACargoShip.Settings.AddFunds + " C-Bills to inventory.");
+                }
+
+                // Add XP
+                if (FellOfACargoShip.Settings.AddXP > 0)
+                {
+                    __instance.Commander.AddExperience(0, "LittleThings.AddXP", FellOfACargoShip.Settings.AddXP);
+                    Logger.LogLine("[SimGameState__OnAttachUXComplete_POSTFIX] Added " + FellOfACargoShip.Settings.AddXP + " XP to " + __instance.Commander.Callsign + ".");
+
+                    foreach (var item in __instance.PilotRoster.Select((value, i) => new { i, value }))
+                    {
+                        Pilot pilot = item.value;
+                        int index = item.i;
+
+                        pilot.AddExperience(index, "LittleThings.AddXP", FellOfACargoShip.Settings.AddXP);
+                        Logger.LogLine("[SimGameState__OnAttachUXComplete_POSTFIX] Added " + FellOfACargoShip.Settings.AddXP + " XP to " + pilot.Callsign + ".");
+                    }
                 }
             }
             catch (Exception e)
