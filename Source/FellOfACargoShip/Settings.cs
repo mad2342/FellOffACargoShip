@@ -4,7 +4,7 @@ namespace FellOfACargoShip
 {
     internal class Settings
     {
-        public bool AddInventory = false;
+        public bool AddInventory = true;
         public bool AddInventoryMechs = false;
         public List<string> AddInventoryMechsList = new List<string>();
         public bool AddInventoryComponents = true;
