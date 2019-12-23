@@ -7,6 +7,7 @@ using BattleTech;
 using System.Collections.Generic;
 using HBS.Data;
 using System.Linq;
+using BattleTech.UI;
 
 namespace FellOfACargoShip
 {
@@ -42,7 +43,7 @@ namespace FellOfACargoShip
     }
 
     [HarmonyPatch(typeof(SimGameState), "_OnAttachUXComplete")]
-    public static class SimGameState__OnAttachUXComplete_Patch1
+    public static class SimGameState__OnAttachUXComplete_AddInventory
     {
         public static bool Prepare()
         {
@@ -79,7 +80,8 @@ namespace FellOfACargoShip
                     "chassisdef_annihilator_ANH-JH",
                     "chassisdef_bullshark_BSK-M3",
                     "chassisdef_bullshark_BSK-MAZ",
-                    "chassisdef_rifleman_RFL-RIP"
+                    "chassisdef_rifleman_RFL-RIP",
+                    "chassisdef_griffin_GRF-1N_DECOMMISSIONED"
                 };
                 List<string> weaponDefBlacklist = new List<string> {
                     "Weapon_MeleeAttack",
@@ -115,6 +117,7 @@ namespace FellOfACargoShip
 
                 };
                 List<string> ammoBoxDefBlacklist = new List<string> {
+                    "AmmunitionBox_Flamer",
                     "Ammo_AmmunitionBox_Generic_Flamer",
                     "Ammo_AmmunitionBox_Generic_SRMInferno",
                     "Ammo_AmmunitionBox_Generic_Narc"
@@ -191,7 +194,19 @@ namespace FellOfACargoShip
                         {
                             foreach (string id in FellOfACargoShip.Settings.AddInventoryMechsList)
                             {
-                                __instance.AddMechByID(id, true);
+                                if (FellOfACargoShip.Settings.AddInventoryMechsSilently)
+                                {
+                                    // BEN: Note that the CHASSIS.ID is needed for this to function correctly.
+                                    // Even in SimGameState.AddMech this would be called with a MechDef (which doesn't work)
+                                    // Currently a calls to SimGameState.AddMech seem to use params that won't get to that place
+                                    // In SimGameState.UnreadyMech it's called with a MechDef.Chassis.Description.Id and works correctly
+                                    string chassisID = id.Replace("mechdef", "chassisdef");
+                                    __instance.AddItemStat(chassisID, typeof(MechDef), false);
+                                }
+                                else
+                                {
+                                    __instance.AddMechByID(id, true);
+                                }
                                 Logger.LogLine("[SimGameState__OnAttachUXComplete_POSTFIX] Added " + id + " to inventory.");
                             }
                         }
@@ -199,10 +214,25 @@ namespace FellOfACargoShip
                         {
                             foreach (string id in mechDefIds)
                             {
-                                __instance.AddMechByID(id, true);
+                                if (FellOfACargoShip.Settings.AddInventoryMechsSilently)
+                                {
+                                    // BEN: Note that the CHASSIS.ID is needed for this to function correctly.
+                                    // Even in SimGameState.AddMech this would be called with a MechDef (which doesn't work)
+                                    // Currently a calls to SimGameState.AddMech seem to use params that won't get to that place
+                                    // In SimGameState.UnreadyMech it's called with a MechDef.Chassis.Description.Id and works correctly
+                                    string chassisID = id.Replace("mechdef", "chassisdef");
+                                    __instance.AddItemStat(chassisID, typeof(MechDef), false);
+                                }
+                                else
+                                {
+                                    __instance.AddMechByID(id, true);
+                                }
                                 Logger.LogLine("[SimGameState__OnAttachUXComplete_POSTFIX] Added " + id + " to inventory.");
                             }
                         }
+                        // @ToDo: Refresh inventory
+                        //MechBayPanel mechBay = (MechBayPanel)AccessTools.Field(typeof(SGRoomController_MechBay), "mechBay").GetValue(__instance.RoomManager.MechBayRoom);
+                        //mechBay.RefreshData();
                     }
 
                     // Add Weapons
@@ -266,26 +296,6 @@ namespace FellOfACargoShip
                             Logger.LogLine("[SimGameState__OnAttachUXComplete_POSTFIX] Added " + id + "(" + FellOfACargoShip.Settings.AddInventoryComponentCount + ") to inventory.");
                         }
                     }
-
-                    // Add Funds
-                    if (FellOfACargoShip.Settings.AddFunds > 0)
-                    {
-                        __instance.AddFunds(FellOfACargoShip.Settings.AddFunds, null, true);
-                        Logger.LogLine("[SimGameState__OnAttachUXComplete_POSTFIX] Added " + FellOfACargoShip.Settings.AddFunds + " C-Bills to inventory.");
-                    }
-
-                    // Add XP
-                    if (FellOfACargoShip.Settings.AddXP > 0)
-                    {
-                        __instance.Commander.AddExperience(0, "LittleThings.AddXP", FellOfACargoShip.Settings.AddXP);
-                        foreach (var item in __instance.PilotRoster.Select((value, i) => new { i, value }))
-                        {
-                            Pilot pilot = item.value;
-                            int index = item.i;
-
-                            pilot.AddExperience(index, "LittleThings.AddXP", FellOfACargoShip.Settings.AddXP);
-                        }
-                    }
                 }
 
 
@@ -334,39 +344,156 @@ namespace FellOfACargoShip
     }
 
     [HarmonyPatch(typeof(SimGameState), "_OnAttachUXComplete")]
-    public static class SimGameState__OnAttachUXComplete_Patch2
+    public static class SimGameState__OnAttachUXComplete_AddArgoUpgrades
     {
         public static bool Prepare()
         {
-            return FellOfACargoShip.Settings.AddFunds > 0 || FellOfACargoShip.Settings.AddXP > 0;
+            return FellOfACargoShip.Settings.AddArgoUpgrades;
         }
 
         public static void Postfix(SimGameState __instance)
         {
             try
             {
-                // Add Funds
-                if (FellOfACargoShip.Settings.AddFunds > 0)
+                string[] startingArgoUpgrades;
+                switch (__instance.SimGameMode)
                 {
-                    __instance.AddFunds(FellOfACargoShip.Settings.AddFunds, null, true);
-                    Logger.LogLine("[SimGameState__OnAttachUXComplete_POSTFIX] Added " + FellOfACargoShip.Settings.AddFunds + " C-Bills to inventory.");
+                    case SimGameState.SimGameType.KAMEA_CAMPAIGN:
+                        startingArgoUpgrades = __instance.Constants.Story.StartingArgoUpgrades;
+                        goto IL_100;
+                    case SimGameState.SimGameType.CAREER:
+                        startingArgoUpgrades = __instance.Constants.CareerMode.StartingArgoUpgrades;
+                        goto IL_100;
+                }
+                startingArgoUpgrades = __instance.Constants.Debug.StartingArgoUpgrades;
+
+                IL_100:
+
+                List<string> argoUpgradesToAdd = new List<string>();
+                if (FellOfACargoShip.Settings.AddArgoUpgradesList.Count > 0)
+                {
+                    argoUpgradesToAdd = FellOfACargoShip.Settings.AddArgoUpgradesList;
+                }
+                else {
+                    argoUpgradesToAdd = FellOfACargoShip.Settings.AllArgoUpgrades;
                 }
 
-                // Add XP
-                if (FellOfACargoShip.Settings.AddXP > 0)
+                if (startingArgoUpgrades != null)
                 {
-                    __instance.Commander.AddExperience(0, "LittleThings.AddXP", FellOfACargoShip.Settings.AddXP);
-                    Logger.LogLine("[SimGameState__OnAttachUXComplete_POSTFIX] Added " + FellOfACargoShip.Settings.AddXP + " XP to " + __instance.Commander.Callsign + ".");
-
-                    foreach (var item in __instance.PilotRoster.Select((value, i) => new { i, value }))
+                    foreach (string id in startingArgoUpgrades)
                     {
-                        Pilot pilot = item.value;
-                        int index = item.i;
-
-                        pilot.AddExperience(index, "LittleThings.AddXP", FellOfACargoShip.Settings.AddXP);
-                        Logger.LogLine("[SimGameState__OnAttachUXComplete_POSTFIX] Added " + FellOfACargoShip.Settings.AddXP + " XP to " + pilot.Callsign + ".");
+                        argoUpgradesToAdd.Remove(id);
                     }
                 }
+
+                if(argoUpgradesToAdd.Count > 0)
+                {
+                    foreach (string id in argoUpgradesToAdd)
+                    {
+                        ShipModuleUpgrade upgrade = __instance.DataManager.ShipUpgradeDefs.Get(id);
+                        __instance.AddArgoUpgrade(upgrade);
+                        Logger.LogLine("[SimGameState__OnAttachUXComplete_POSTFIX] Added Upgrade (" + id + ") to Argo.");
+                    }
+                }
+
+            }
+            catch (Exception e)
+            {
+                Logger.LogError(e);
+            }
+        }
+    }
+
+    [HarmonyPatch(typeof(SimGameState), "_OnAttachUXComplete")]
+    public static class SimGameState__OnAttachUXComplete_AddFunds
+    {
+        public static bool Prepare()
+        {
+            return FellOfACargoShip.Settings.AddFunds > 0;
+        }
+
+        public static void Postfix(SimGameState __instance)
+        {
+            try
+            {
+                __instance.AddFunds(FellOfACargoShip.Settings.AddFunds, null, true);
+                Logger.LogLine("[SimGameState__OnAttachUXComplete_POSTFIX] Added " + FellOfACargoShip.Settings.AddFunds + " C-Bills to inventory.");
+            }
+            catch (Exception e)
+            {
+                Logger.LogError(e);
+            }
+        }
+    }
+
+    [HarmonyPatch(typeof(SimGameState), "_OnAttachUXComplete")]
+    public static class SimGameState__OnAttachUXComplete_AddXP
+    {
+        public static bool Prepare()
+        {
+            return FellOfACargoShip.Settings.AddXP > 0;
+        }
+
+        public static void Postfix(SimGameState __instance)
+        {
+            try
+            {
+                // Won't work on START_GAME as _OnAttachUXComplete was called before the Commander has finished character creation
+                __instance.Commander.AddExperience(0, "LittleThings.AddXP", FellOfACargoShip.Settings.AddXP);
+                Logger.LogLine("[SimGameState__OnAttachUXComplete_POSTFIX] Added " + FellOfACargoShip.Settings.AddXP + " XP to " + __instance.Commander.Callsign + ".");
+
+                foreach (var item in __instance.PilotRoster.Select((value, i) => new { i, value }))
+                {
+                    Pilot pilot = item.value;
+                    int index = item.i;
+
+                    pilot.AddExperience(index, "LittleThings.AddXP", FellOfACargoShip.Settings.AddXP);
+                    Logger.LogLine("[SimGameState__OnAttachUXComplete_POSTFIX] Added " + FellOfACargoShip.Settings.AddXP + " XP to " + pilot.Callsign + ".");
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.LogError(e);
+            }
+        }
+    }
+
+    [HarmonyPatch(typeof(SimGameState), "OnCharacterCreationComplete")]
+    public static class SimGameState__OnCharacterCreationComplete_AddCommanderXP
+    {
+        public static bool Prepare()
+        {
+            return FellOfACargoShip.Settings.AddXP > 0;
+        }
+
+        public static void Postfix(SimGameState __instance)
+        {
+            try
+            {
+                __instance.Commander.AddExperience(0, "LittleThings.AddXP", FellOfACargoShip.Settings.AddXP);
+                Logger.LogLine("[SimGameState_OnCharacterCreationComplete_POSTFIX] Added " + FellOfACargoShip.Settings.AddXP + " XP to " + __instance.Commander.Callsign + ".");
+            }
+            catch (Exception e)
+            {
+                Logger.LogError(e);
+            }
+        }
+    }
+
+    [HarmonyPatch(typeof(SimGameState), "OnCareerModeCharacterCreationComplete")]
+    public static class SimGameState__OnCareerModeCharacterCreationComplete_AddCommanderXP
+    {
+        public static bool Prepare()
+        {
+            return FellOfACargoShip.Settings.AddXP > 0;
+        }
+
+        public static void Postfix(SimGameState __instance)
+        {
+            try
+            {
+                __instance.Commander.AddExperience(0, "LittleThings.AddXP", FellOfACargoShip.Settings.AddXP);
+                Logger.LogLine("[SimGameState_OnCareerModeCharacterCreationComplete_POSTFIX] Added " + FellOfACargoShip.Settings.AddXP + " XP to " + __instance.Commander.Callsign + ".");
             }
             catch (Exception e)
             {

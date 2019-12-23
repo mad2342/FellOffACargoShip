@@ -9,8 +9,11 @@
     "DLL": "FellOfACargoShip.dll",
 
     "Settings": {
-        "AddInventory": false,
-        "AddInventoryMechs": false,
+        "LogComponentLists": true,
+
+        "AddInventory": true,
+        "AddInventoryMechs": true,
+        "AddInventoryMechsSilently": true,
         "AddInventoryMechsList": [
             "mechdef_banshee_BNC-3S",
             "mechdef_blackjack_BJ-1DB",
@@ -45,9 +48,10 @@
         "AddInventoryComponents": true,
         "AddInventoryComponentCount": 10,
 
-        "AddFunds": 0,
-        "AddXP": 0,
+        "AddFunds": 9000000,
+        "AddXP": 20000,
 
-        "LogComponentLists": false
+        "AddArgoUpgrades": true,
+        "AddArgoUpgradesList": []
     }
 }
