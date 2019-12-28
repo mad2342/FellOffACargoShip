@@ -52,6 +52,22 @@
         "AddXP": 20000,
 
         "AddArgoUpgrades": true,
-        "AddArgoUpgradesList": []
+        "AddArgoUpgradesList": [],
+
+        "AddRoninPilots": true,
+        "AddRoninPilotsList": [
+            "pilot_backer_Bono",
+            "pilot_backer_Chik",
+            "pilot_backer_FalkM",
+            "pilot_backer_Gibbs",
+            "pilot_backer_Helterbran",
+            "pilot_backer_Leone",
+            "pilot_backer_Liebenow",
+            "pilot_backer_Oliver",
+            "pilot_backer_Reinke",
+            "pilot_backer_Shields",
+            "pilot_backer_SwansonA",
+            "pilot_backer_Thomas"
+        ]
     }
 }

@@ -57,5 +57,8 @@ namespace FellOfACargoShip
             "argoUpgrade_trainingModule2",
             "argoUpgrade_trainingModule3"
         };
+
+        public bool AddRoninPilots = true;
+        public List<string> AddRoninPilotsList = new List<string>();
     }
 }

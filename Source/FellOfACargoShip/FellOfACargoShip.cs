@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using HBS.Data;
 using System.Linq;
 using BattleTech.UI;
+using HBS.Collections;
 
 namespace FellOfACargoShip
 {
@@ -218,7 +219,7 @@ namespace FellOfACargoShip
                                 {
                                     // BEN: Note that the CHASSIS.ID is needed for this to function correctly.
                                     // Even in SimGameState.AddMech this would be called with a MechDef (which doesn't work)
-                                    // Currently a calls to SimGameState.AddMech seem to use params that won't get to that place
+                                    // Currently all calls to SimGameState.AddMech seem to use params that won't get to that place
                                     // In SimGameState.UnreadyMech it's called with a MechDef.Chassis.Description.Id and works correctly
                                     string chassisID = id.Replace("mechdef", "chassisdef");
                                     __instance.AddItemStat(chassisID, typeof(MechDef), false);
@@ -230,9 +231,6 @@ namespace FellOfACargoShip
                                 Logger.LogLine("[SimGameState__OnAttachUXComplete_POSTFIX] Added " + id + " to inventory.");
                             }
                         }
-                        // @ToDo: Refresh inventory
-                        //MechBayPanel mechBay = (MechBayPanel)AccessTools.Field(typeof(SGRoomController_MechBay), "mechBay").GetValue(__instance.RoomManager.MechBayRoom);
-                        //mechBay.RefreshData();
                     }
 
                     // Add Weapons
@@ -351,7 +349,7 @@ namespace FellOfACargoShip
             return FellOfACargoShip.Settings.AddArgoUpgrades;
         }
 
-        public static void Postfix(SimGameState __instance)
+        public static void Postfix(SimGameState __instance, List<ShipModuleUpgrade> ___shipUpgrades, List<string> ___purchasedArgoUpgrades, TagSet ___companyTags)
         {
             try
             {
@@ -391,11 +389,45 @@ namespace FellOfACargoShip
                     foreach (string id in argoUpgradesToAdd)
                     {
                         ShipModuleUpgrade upgrade = __instance.DataManager.ShipUpgradeDefs.Get(id);
-                        __instance.AddArgoUpgrade(upgrade);
+
+                        //__instance.AddArgoUpgrade(upgrade);
+
+                        // BEN: Custom AddArgoUpgrade (No timeline refresh, this will be applied later ONE TIME ONLY)
+                        ___shipUpgrades.Add(upgrade);
+                        ___purchasedArgoUpgrades.Add(upgrade.Description.Id);
+                        if (__instance.CurDropship == DropshipType.Argo)
+                        {
+                            if (upgrade.Tags != null && !upgrade.Tags.IsEmpty)
+                            {
+                                ___companyTags.AddRange(upgrade.Tags);
+                            }
+                            foreach (SimGameStat companyStat in upgrade.Stats)
+                            {
+                                __instance.SetCompanyStat(companyStat);
+                            }
+                            if (upgrade.Actions != null)
+                            {
+                                SimGameResultAction[] actions = upgrade.Actions;
+                                for (int i = 0; i < actions.Length; i++)
+                                {
+                                    SimGameState.ApplyEventAction(actions[i], null);
+                                }
+                            }
+                        }
                         Logger.LogLine("[SimGameState__OnAttachUXComplete_POSTFIX] Added Upgrade (" + id + ") to Argo.");
                     }
-                }
+                    // Refresh timeline ONCE
+                    __instance.RoomManager.RefreshTimeline();
 
+
+                    // BEN: Refresh MechBayPanel (if an upgrade.Action possibly adds a Mech...)
+                    // Probably add this to a postfix of SimGameState.AddMech()
+                    /*
+                    MechBayPanel mechBay = (MechBayPanel)AccessTools.Field(typeof(SGRoomController_MechBay), "mechBay").GetValue(__instance.RoomManager.MechBayRoom);
+                    MechBayRowGroupWidget bayGroupWidget = (MechBayRowGroupWidget)AccessTools.Field(typeof(MechBayPanel), "bayGroupWidget").GetValue(mechBay);
+                    bayGroupWidget.SetData(mechBay, __instance);
+                    */
+                }
             }
             catch (Exception e)
             {
@@ -425,6 +457,53 @@ namespace FellOfACargoShip
             }
         }
     }
+
+
+
+    [HarmonyPatch(typeof(SimGameState), "_OnAttachUXComplete")]
+    public static class SimGameState__OnAttachUXComplete_AddRoninPilots
+    {
+        public static bool Prepare()
+        {
+            return FellOfACargoShip.Settings.AddRoninPilots;
+        }
+
+        public static void Postfix(SimGameState __instance)
+        {
+            try
+            {
+                bool pilotsWillFit = __instance.PilotRoster.Count + FellOfACargoShip.Settings.AddRoninPilotsList.Count <= __instance.GetMaxMechWarriors();
+                Logger.LogLine("[SimGameState__OnAttachUXComplete_POSTFIX] __instance.PilotRoster.Count: " + __instance.PilotRoster.Count);
+                Logger.LogLine("[SimGameState__OnAttachUXComplete_POSTFIX] FellOfACargoShip.Settings.AddRoninPilotsList.Count: " + FellOfACargoShip.Settings.AddRoninPilotsList.Count);
+                Logger.LogLine("[SimGameState__OnAttachUXComplete_POSTFIX] __instance.GetMaxMechWarriors: " + __instance.GetMaxMechWarriors());
+
+                if (pilotsWillFit && FellOfACargoShip.Settings.AddRoninPilotsList.Count > 0)
+                {
+                    foreach (string roninID in FellOfACargoShip.Settings.AddRoninPilotsList)
+                    {
+                        Logger.LogLine("[SimGameState__OnAttachUXComplete_POSTFIX] roninID: " + roninID);
+                        PilotDef pilotDef = __instance.DataManager.PilotDefs.Get(roninID);
+
+                        if (pilotDef != null)
+                        {
+                            __instance.AddPilotToRoster(pilotDef, true, true);
+                            Logger.LogLine("[SimGameState__OnAttachUXComplete_POSTFIX] Added " + pilotDef.Description.Callsign + " to Roster");
+                        }
+                    }
+                }
+                else
+                {
+                    Logger.LogLine("[SimGameState__OnAttachUXComplete_POSTFIX] Failed to add Ronin: No space or List emtpy");
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.LogError(e);
+            }
+        }
+    }
+
+
 
     [HarmonyPatch(typeof(SimGameState), "_OnAttachUXComplete")]
     public static class SimGameState__OnAttachUXComplete_AddXP
@@ -459,7 +538,7 @@ namespace FellOfACargoShip
     }
 
     [HarmonyPatch(typeof(SimGameState), "OnCharacterCreationComplete")]
-    public static class SimGameState__OnCharacterCreationComplete_AddCommanderXP
+    public static class SimGameState_OnCharacterCreationComplete_AddCommanderXP
     {
         public static bool Prepare()
         {
@@ -481,7 +560,7 @@ namespace FellOfACargoShip
     }
 
     [HarmonyPatch(typeof(SimGameState), "OnCareerModeCharacterCreationComplete")]
-    public static class SimGameState__OnCareerModeCharacterCreationComplete_AddCommanderXP
+    public static class SimGameState_OnCareerModeCharacterCreationComplete_AddCommanderXP
     {
         public static bool Prepare()
         {
