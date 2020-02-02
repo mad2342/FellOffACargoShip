@@ -34,7 +34,7 @@ namespace FellOfACargoShip
             catch (Exception e)
             {
                 Settings = new Settings();
-                Logger.LogError(e);
+                Logger.Error(e);
             }
 
             // Harmony calls need to go last here because their Prepare() methods directly check Settings...
@@ -127,7 +127,7 @@ namespace FellOfACargoShip
 
 
                 // Collect Mechs
-                Logger.LogLine("[SimGameState__OnAttachUXComplete_POSTFIX] Collecting all valid Mechs");
+                Logger.Debug("[SimGameState__OnAttachUXComplete_POSTFIX] Collecting all valid Mechs");
                 foreach (string chassisDefId in ChassisDefs.Keys)
                 {
                     if (!chassisDefBlacklist.Contains(chassisDefId))
@@ -139,7 +139,7 @@ namespace FellOfACargoShip
                 mechDefIds.Sort();
 
                 // Collect Weapons
-                Logger.LogLine("[SimGameState__OnAttachUXComplete_POSTFIX] Collecting all valid Weapons");
+                Logger.Debug("[SimGameState__OnAttachUXComplete_POSTFIX] Collecting all valid Weapons");
                 foreach (string id in WeaponDefs.Keys)
                 {
                     if (!weaponDefBlacklist.Contains(id))
@@ -150,7 +150,7 @@ namespace FellOfACargoShip
                 weaponDefIds.Sort();
 
                 // Collect Upgrades
-                Logger.LogLine("[SimGameState__OnAttachUXComplete_POSTFIX] Collecting all valid Upgrades");
+                Logger.Debug("[SimGameState__OnAttachUXComplete_POSTFIX] Collecting all valid Upgrades");
                 foreach (string id in UpgradeDefs.Keys)
                 {
                     if (!upgradeDefBlacklist.Contains(id))
@@ -161,7 +161,7 @@ namespace FellOfACargoShip
                 upgradeDefIds.Sort();
 
                 // Collect Heatsinks
-                Logger.LogLine("[SimGameState__OnAttachUXComplete_POSTFIX] Collecting all valid Heatsinks");
+                Logger.Debug("[SimGameState__OnAttachUXComplete_POSTFIX] Collecting all valid Heatsinks");
                 foreach (string id in HeatSinkDefs.Keys)
                 {
                     if (!heatSinkDefBlacklist.Contains(id))
@@ -172,7 +172,7 @@ namespace FellOfACargoShip
                 heatSinkDefIds.Sort();
 
                 // Collect Ammunition
-                Logger.LogLine("[SimGameState__OnAttachUXComplete_POSTFIX] Collecting all valid AmmunitionBoxes");
+                Logger.Debug("[SimGameState__OnAttachUXComplete_POSTFIX] Collecting all valid AmmunitionBoxes");
                 foreach (string id in AmmoBoxDefs.Keys)
                 {
                     if (!ammoBoxDefBlacklist.Contains(id))
@@ -199,7 +199,7 @@ namespace FellOfACargoShip
                                 {
                                     // BEN: Note that the CHASSIS.ID is needed for this to function correctly.
                                     // Even in SimGameState.AddMech this would be called with a MechDef (which doesn't work)
-                                    // Currently a calls to SimGameState.AddMech seem to use params that won't get to that place
+                                    // Currently all calls to SimGameState.AddMech seem to use params that won't get to that place
                                     // In SimGameState.UnreadyMech it's called with a MechDef.Chassis.Description.Id and works correctly
                                     string chassisID = id.Replace("mechdef", "chassisdef");
                                     __instance.AddItemStat(chassisID, typeof(MechDef), false);
@@ -208,7 +208,7 @@ namespace FellOfACargoShip
                                 {
                                     __instance.AddMechByID(id, true);
                                 }
-                                Logger.LogLine("[SimGameState__OnAttachUXComplete_POSTFIX] Added " + id + " to inventory.");
+                                Logger.Debug("[SimGameState__OnAttachUXComplete_POSTFIX] Added " + id + " to inventory.");
                             }
                         }
                         else
@@ -228,7 +228,7 @@ namespace FellOfACargoShip
                                 {
                                     __instance.AddMechByID(id, true);
                                 }
-                                Logger.LogLine("[SimGameState__OnAttachUXComplete_POSTFIX] Added " + id + " to inventory.");
+                                Logger.Debug("[SimGameState__OnAttachUXComplete_POSTFIX] Added " + id + " to inventory.");
                             }
                         }
                     }
@@ -244,7 +244,7 @@ namespace FellOfACargoShip
                                 __instance.AddItemStat(id, typeof(WeaponDef), false);
                                 i++;
                             }
-                            Logger.LogLine("[SimGameState__OnAttachUXComplete_POSTFIX] Added " + id + "(" + FellOfACargoShip.Settings.AddInventoryComponentCount + ") to inventory.");
+                            Logger.Debug("[SimGameState__OnAttachUXComplete_POSTFIX] Added " + id + "(" + FellOfACargoShip.Settings.AddInventoryComponentCount + ") to inventory.");
                         }
                     }
 
@@ -259,7 +259,7 @@ namespace FellOfACargoShip
                                 __instance.AddItemStat(id, typeof(UpgradeDef), false);
                                 i++;
                             }
-                            Logger.LogLine("[SimGameState__OnAttachUXComplete_POSTFIX] Added " + id + "(" + FellOfACargoShip.Settings.AddInventoryComponentCount + ") to inventory.");
+                            Logger.Debug("[SimGameState__OnAttachUXComplete_POSTFIX] Added " + id + "(" + FellOfACargoShip.Settings.AddInventoryComponentCount + ") to inventory.");
                         }
                     }
 
@@ -275,7 +275,7 @@ namespace FellOfACargoShip
                                 __instance.AddItemStat(id, typeof(HeatSinkDef), false);
                                 i++;
                             }
-                            Logger.LogLine("[SimGameState__OnAttachUXComplete_POSTFIX] Added " + id + "(" + FellOfACargoShip.Settings.AddInventoryComponentCount + ") to inventory.");
+                            Logger.Debug("[SimGameState__OnAttachUXComplete_POSTFIX] Added " + id + "(" + FellOfACargoShip.Settings.AddInventoryComponentCount + ") to inventory.");
                         }
                     }
 
@@ -291,7 +291,7 @@ namespace FellOfACargoShip
                                 __instance.AddItemStat(id, typeof(AmmunitionBoxDef), false);
                                 i++;
                             }
-                            Logger.LogLine("[SimGameState__OnAttachUXComplete_POSTFIX] Added " + id + "(" + FellOfACargoShip.Settings.AddInventoryComponentCount + ") to inventory.");
+                            Logger.Debug("[SimGameState__OnAttachUXComplete_POSTFIX] Added " + id + "(" + FellOfACargoShip.Settings.AddInventoryComponentCount + ") to inventory.");
                         }
                     }
                 }
@@ -301,42 +301,42 @@ namespace FellOfACargoShip
                 // Clean list
                 if (FellOfACargoShip.Settings.LogComponentLists)
                 {
-                    Logger.LogLine("------------------------------------------------------------------------------------------------------------------------");
-                    Logger.LogLine("[SimGameState__OnAttachUXComplete_POSTFIX] Generate clean, json-ready list of all valid Mechs and Components.");
-                    Logger.LogLine("------------------------------");
+                    Logger.Debug("------------------------------------------------------------------------------------------------------------------------");
+                    Logger.Debug("[SimGameState__OnAttachUXComplete_POSTFIX] Generate clean, json-ready list of all valid Mechs and Components.");
+                    Logger.Debug("------------------------------");
                     // Mechs
                     foreach (string id in mechDefIds)
                     {
-                        Logger.LogLine("\"" + id + "\",", false);
+                        Logger.Debug("\"" + id + "\",", false);
                     }
                     // Weapons
                     foreach (string id in weaponDefIds)
                     {
-                        Logger.LogLine("\"" + id + "\",", false);
+                        Logger.Debug("\"" + id + "\",", false);
                     }
                     // Upgrades
                     foreach (string id in upgradeDefIds)
                     {
-                        Logger.LogLine("\"" + id + "\",", false);
+                        Logger.Debug("\"" + id + "\",", false);
                     }
                     // Heatsinks
                     foreach (string id in heatSinkDefIds)
                     {
-                        Logger.LogLine("\"" + id + "\",", false);
+                        Logger.Debug("\"" + id + "\",", false);
 
                     }
                     // Ammunition
                     foreach (string id in ammoBoxDefIds)
                     {
-                        Logger.LogLine("\"" + id + "\",", false);
+                        Logger.Debug("\"" + id + "\",", false);
                     }
-                    Logger.LogLine("------------------------------");
-                    Logger.LogLine("------------------------------------------------------------------------------------------------------------------------");
+                    Logger.Debug("------------------------------");
+                    Logger.Debug("------------------------------------------------------------------------------------------------------------------------");
                 }
             }
             catch (Exception e)
             {
-                Logger.LogError(e);
+                Logger.Error(e);
             }
         }
     }
@@ -414,7 +414,7 @@ namespace FellOfACargoShip
                                 }
                             }
                         }
-                        Logger.LogLine("[SimGameState__OnAttachUXComplete_POSTFIX] Added Upgrade (" + id + ") to Argo.");
+                        Logger.Debug("[SimGameState__OnAttachUXComplete_POSTFIX] Added Upgrade (" + id + ") to Argo.");
                     }
                     // Refresh timeline ONCE
                     __instance.RoomManager.RefreshTimeline();
@@ -431,7 +431,7 @@ namespace FellOfACargoShip
             }
             catch (Exception e)
             {
-                Logger.LogError(e);
+                Logger.Error(e);
             }
         }
     }
@@ -449,11 +449,11 @@ namespace FellOfACargoShip
             try
             {
                 __instance.AddFunds(FellOfACargoShip.Settings.AddFunds, null, true);
-                Logger.LogLine("[SimGameState__OnAttachUXComplete_POSTFIX] Added " + FellOfACargoShip.Settings.AddFunds + " C-Bills to inventory.");
+                Logger.Debug("[SimGameState__OnAttachUXComplete_POSTFIX] Added " + FellOfACargoShip.Settings.AddFunds + " C-Bills to inventory.");
             }
             catch (Exception e)
             {
-                Logger.LogError(e);
+                Logger.Error(e);
             }
         }
     }
@@ -473,32 +473,32 @@ namespace FellOfACargoShip
             try
             {
                 bool pilotsWillFit = __instance.PilotRoster.Count + FellOfACargoShip.Settings.AddRoninPilotsList.Count <= __instance.GetMaxMechWarriors();
-                Logger.LogLine("[SimGameState__OnAttachUXComplete_POSTFIX] __instance.PilotRoster.Count: " + __instance.PilotRoster.Count);
-                Logger.LogLine("[SimGameState__OnAttachUXComplete_POSTFIX] FellOfACargoShip.Settings.AddRoninPilotsList.Count: " + FellOfACargoShip.Settings.AddRoninPilotsList.Count);
-                Logger.LogLine("[SimGameState__OnAttachUXComplete_POSTFIX] __instance.GetMaxMechWarriors: " + __instance.GetMaxMechWarriors());
+                Logger.Debug("[SimGameState__OnAttachUXComplete_POSTFIX] __instance.PilotRoster.Count: " + __instance.PilotRoster.Count);
+                Logger.Debug("[SimGameState__OnAttachUXComplete_POSTFIX] FellOfACargoShip.Settings.AddRoninPilotsList.Count: " + FellOfACargoShip.Settings.AddRoninPilotsList.Count);
+                Logger.Debug("[SimGameState__OnAttachUXComplete_POSTFIX] __instance.GetMaxMechWarriors: " + __instance.GetMaxMechWarriors());
 
                 if (pilotsWillFit && FellOfACargoShip.Settings.AddRoninPilotsList.Count > 0)
                 {
                     foreach (string roninID in FellOfACargoShip.Settings.AddRoninPilotsList)
                     {
-                        Logger.LogLine("[SimGameState__OnAttachUXComplete_POSTFIX] roninID: " + roninID);
+                        Logger.Debug("[SimGameState__OnAttachUXComplete_POSTFIX] roninID: " + roninID);
                         PilotDef pilotDef = __instance.DataManager.PilotDefs.Get(roninID);
 
                         if (pilotDef != null)
                         {
                             __instance.AddPilotToRoster(pilotDef, true, true);
-                            Logger.LogLine("[SimGameState__OnAttachUXComplete_POSTFIX] Added " + pilotDef.Description.Callsign + " to Roster");
+                            Logger.Debug("[SimGameState__OnAttachUXComplete_POSTFIX] Added " + pilotDef.Description.Callsign + " to Roster");
                         }
                     }
                 }
                 else
                 {
-                    Logger.LogLine("[SimGameState__OnAttachUXComplete_POSTFIX] Failed to add Ronin: No space or List emtpy");
+                    Logger.Debug("[SimGameState__OnAttachUXComplete_POSTFIX] Failed to add Ronin: No space or List emtpy");
                 }
             }
             catch (Exception e)
             {
-                Logger.LogError(e);
+                Logger.Error(e);
             }
         }
     }
@@ -519,7 +519,7 @@ namespace FellOfACargoShip
             {
                 // Won't work on START_GAME as _OnAttachUXComplete was called before the Commander has finished character creation
                 __instance.Commander.AddExperience(0, "LittleThings.AddXP", FellOfACargoShip.Settings.AddXP);
-                Logger.LogLine("[SimGameState__OnAttachUXComplete_POSTFIX] Added " + FellOfACargoShip.Settings.AddXP + " XP to " + __instance.Commander.Callsign + ".");
+                Logger.Debug("[SimGameState__OnAttachUXComplete_POSTFIX] Added " + FellOfACargoShip.Settings.AddXP + " XP to " + __instance.Commander.Callsign + ".");
 
                 foreach (var item in __instance.PilotRoster.Select((value, i) => new { i, value }))
                 {
@@ -527,12 +527,12 @@ namespace FellOfACargoShip
                     int index = item.i;
 
                     pilot.AddExperience(index, "LittleThings.AddXP", FellOfACargoShip.Settings.AddXP);
-                    Logger.LogLine("[SimGameState__OnAttachUXComplete_POSTFIX] Added " + FellOfACargoShip.Settings.AddXP + " XP to " + pilot.Callsign + ".");
+                    Logger.Debug("[SimGameState__OnAttachUXComplete_POSTFIX] Added " + FellOfACargoShip.Settings.AddXP + " XP to " + pilot.Callsign + ".");
                 }
             }
             catch (Exception e)
             {
-                Logger.LogError(e);
+                Logger.Error(e);
             }
         }
     }
@@ -550,11 +550,11 @@ namespace FellOfACargoShip
             try
             {
                 __instance.Commander.AddExperience(0, "LittleThings.AddXP", FellOfACargoShip.Settings.AddXP);
-                Logger.LogLine("[SimGameState_OnCharacterCreationComplete_POSTFIX] Added " + FellOfACargoShip.Settings.AddXP + " XP to " + __instance.Commander.Callsign + ".");
+                Logger.Debug("[SimGameState_OnCharacterCreationComplete_POSTFIX] Added " + FellOfACargoShip.Settings.AddXP + " XP to " + __instance.Commander.Callsign + ".");
             }
             catch (Exception e)
             {
-                Logger.LogError(e);
+                Logger.Error(e);
             }
         }
     }
@@ -572,11 +572,11 @@ namespace FellOfACargoShip
             try
             {
                 __instance.Commander.AddExperience(0, "LittleThings.AddXP", FellOfACargoShip.Settings.AddXP);
-                Logger.LogLine("[SimGameState_OnCareerModeCharacterCreationComplete_POSTFIX] Added " + FellOfACargoShip.Settings.AddXP + " XP to " + __instance.Commander.Callsign + ".");
+                Logger.Debug("[SimGameState_OnCareerModeCharacterCreationComplete_POSTFIX] Added " + FellOfACargoShip.Settings.AddXP + " XP to " + __instance.Commander.Callsign + ".");
             }
             catch (Exception e)
             {
-                Logger.LogError(e);
+                Logger.Error(e);
             }
         }
     }
