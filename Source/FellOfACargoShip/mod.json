@@ -9,65 +9,6 @@
     "DLL": "FellOfACargoShip.dll",
 
     "Settings": {
-        "LogComponentLists": true,
-
-        "AddInventory": true,
-        "AddInventoryMechs": true,
-        "AddInventoryMechsSilently": true,
-        "AddInventoryMechsList": [
-            "mechdef_banshee_BNC-3S",
-            "mechdef_blackjack_BJ-1DB",
-            "mechdef_catapult_CPLT-C4",
-            "mechdef_locust_LCT-1E",
-            "mechdef_marauder_MAD-3R",
-            "mechdef_spider_SDR-5K",
-            "mechdef_urbanmech_UM-R60L",
-            "mechdef_urbanmech_UM-R90",
-            "mechdef_vindicator_VND-1AA",
-            "mechdef_warhammer_WHM-6D",
-            "mechdef_warhammer_WHM-6R",
-            "mechdef_hatchetman_HCT-3X",
-            "mechdef_javelin_JVN-10F",
-            "mechdef_javelin_JVN-10N",
-            "mechdef_raven_RVN-1X",
-            "mechdef_annihilator_ANH-1A",
-            "mechdef_archer_ARC-2R",
-            "mechdef_archer_ARC-2S",
-            "mechdef_assassin_ASN-21",
-            "mechdef_assassin_ASN-101",
-            "mechdef_bullshark_BSK-M3",
-            "mechdef_flea_FLE-4",
-            "mechdef_flea_FLE-15",
-            "mechdef_phoenixhawk_PXH-1",
-            "mechdef_phoenixhawk_PXH-1K",
-            "mechdef_rifleman_RFL-3C",
-            "mechdef_rifleman_RFL-3N",
-            "mechdef_vulcan_VL-2T",
-            "mechdef_vulcan_VL-5T"
-        ],
-        "AddInventoryComponents": true,
-        "AddInventoryComponentCount": 10,
-
-        "AddFunds": 9000000,
-        "AddXP": 20000,
-
-        "AddArgoUpgrades": true,
-        "AddArgoUpgradesList": [],
-
-        "AddRoninPilots": true,
-        "AddRoninPilotsList": [
-            "pilot_backer_Bono",
-            "pilot_backer_Chik",
-            "pilot_backer_FalkM",
-            "pilot_backer_Gibbs",
-            "pilot_backer_Helterbran",
-            "pilot_backer_Leone",
-            "pilot_backer_Liebenow",
-            "pilot_backer_Oliver",
-            "pilot_backer_Reinke",
-            "pilot_backer_Shields",
-            "pilot_backer_SwansonA",
-            "pilot_backer_Thomas"
-        ]
+        "AddMechsSilently": false
     }
 }
