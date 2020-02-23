@@ -6,7 +6,7 @@ namespace FellOfACargoShip.Cheater
 {
     internal static class Component
     {
-        private static SimGameState simGameState = LazySingletonBehavior<UnityGameInstance>.Instance.Game.Simulation;
+        private static SimGameState simGameState = SceneSingletonBehavior<UnityGameInstance>.Instance.Game.Simulation;
         private static DataProvider dataProvider = new DataProvider();
 
         public static void Add(string param)

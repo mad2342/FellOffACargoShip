@@ -7,7 +7,7 @@ namespace FellOfACargoShip
 {
     internal class DataProvider
     {
-        private static SimGameState simGameState = LazySingletonBehavior<UnityGameInstance>.Instance.Game.Simulation;
+        private static SimGameState simGameState = SceneSingletonBehavior<UnityGameInstance>.Instance.Game.Simulation;
 
         private IDataItemStore<string, ChassisDef> ChassisDefs = simGameState.DataManager.ChassisDefs;
         private IDataItemStore<string, WeaponDef> WeaponDefs = simGameState.DataManager.WeaponDefs;
