@@ -30,7 +30,8 @@ namespace FellOfACargoShip
             "chassisdef_bullshark_BSK-M3",
             "chassisdef_bullshark_BSK-MAZ",
             "chassisdef_rifleman_RFL-RIP",
-            "chassisdef_griffin_GRF-1N_DECOMMISSIONED"
+            "chassisdef_griffin_GRF-1N_DECOMMISSIONED",
+            "chassisdef_dragon_DRG-1N_BUSTEDUP"
         };
 
         private List<string> weaponDefBlacklist = new List<string> {
@@ -73,7 +74,9 @@ namespace FellOfACargoShip
             "AmmunitionBox_Flamer",
             "Ammo_AmmunitionBox_Generic_Flamer",
             "Ammo_AmmunitionBox_Generic_SRMInferno",
-            "Ammo_AmmunitionBox_Generic_Narc"
+            "Ammo_AmmunitionBox_Generic_LRM_HalfTon",
+            "Ammo_AmmunitionBox_Generic_MG_HalfTon",
+            "Ammo_AmmunitionBox_Generic_SRM_HalfTon"
         };
 
         public List<string> ArgoUpgradeIds = new List<string>()
@@ -114,6 +117,26 @@ namespace FellOfACargoShip
             "argoUpgrade_trainingModule2",
             "argoUpgrade_trainingModule3"
         };
+
+        public List<string> BourbonCustomMechIds = new List<string>()
+        {
+            "mechdef_catapult_CPLT-C1b",
+            "mechdef_dragon_DRG-1N_BUSTEDUP",
+            "mechdef_griffin_GRF-1N_DECOMMISSIONED",
+            "mechdef_kintaro_KTO-19b",
+            "mechdef_locust_LCT-1Vb",
+            "mechdef_locust_LCT-1Vb_DAMAGED",
+            "mechdef_orion_ON2-Mb",
+            "mechdef_shadowhawk_SHD-2Hb",
+            "mechdef_shadowhawk_SHD-2Hb_DAMAGED",
+            "mechdef_thunderbolt_TDR-5Sb",
+            "mechdef_warhammer_WHM-6Rb",
+            "mechdef_zeus_ZEU-5S",
+            "mechdef_crab_CRB-27sl",
+            "mechdef_annihilator_ANH-2A",
+            "mechdef_archer_ARC-2Rb"
+        };
+
         public List<string> MechDefIds = new List<string>();
         public List<string> WeaponDefIds = new List<string>();
         public List<string> UpgradeDefIds = new List<string>();

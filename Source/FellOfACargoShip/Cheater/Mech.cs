@@ -25,6 +25,16 @@ namespace FellOfACargoShip.Cheater
                 return;
             }
 
+            // Special interest
+            if (param == "bourbon")
+            {
+                foreach (string id in dataProvider.BourbonCustomMechIds)
+                {
+                    AddMech(id, true);
+                }
+                return;
+            }
+
 
 
             // BEN: Note that the CHASSIS.ID is needed for this to function correctly.
@@ -42,28 +52,39 @@ namespace FellOfACargoShip.Cheater
                 return;
             }
 
-            string mechId = chassisId.Replace("chassisdef", "mechdef");
-            if (!dataProvider.MechDefIds.Contains(mechId))
-            {
-                string message = $"{mechId} is blacklisted.";
-                Logger.Debug($"[Cheater_Mech_Add] {message}");
-                PopupHelper.Info(message);
+            AddMech(chassisId);
 
-                return;
-            }
+            
 
-            if (FellOfACargoShip.Settings.AddMechsSilently)
-            {
-                simGameState.AddItemStat(chassisId, typeof(MechDef), false);
 
-                string message = $"{chassisId} added to inventory.";
-                Logger.Debug($"[Cheater_Mech_Add] {message}");
-                PopupHelper.Info(message);
-            }
-            else
+
+
+            // Local helper
+            void AddMech(string id, bool force = false)
             {
-                simGameState.AddMechByID(mechId, true);
-                Fields.IsCustomPopup = false;
+                string mechId = id.Replace("chassisdef", "mechdef");
+                if (!force && !dataProvider.MechDefIds.Contains(mechId))
+                {
+                    string message = $"{mechId} is blacklisted.";
+                    Logger.Debug($"[Cheater_Mech_Add] {message}");
+                    PopupHelper.Info(message);
+
+                    return;
+                }
+
+                if (FellOfACargoShip.Settings.AddMechsSilently)
+                {
+                    simGameState.AddItemStat(id, typeof(MechDef), false);
+
+                    string message = $"{id} added to inventory.";
+                    Logger.Debug($"[Cheater_Mech_Add] {message}");
+                    PopupHelper.Info(message);
+                }
+                else
+                {
+                    simGameState.AddMechByID(mechId, true);
+                    Fields.IsCustomPopup = false;
+                }
             }
         }
     }
