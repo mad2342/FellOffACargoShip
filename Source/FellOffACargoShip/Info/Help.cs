@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FellOfACargoShip.Info
+namespace FellOffACargoShip.Info
 {
     class Help
     {

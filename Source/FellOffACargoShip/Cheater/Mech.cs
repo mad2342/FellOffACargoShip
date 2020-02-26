@@ -1,9 +1,9 @@
 ﻿using System;
 using BattleTech;
-using FellOfACargoShip.Extensions;
+using FellOffACargoShip.Extensions;
 using HBS;
 
-namespace FellOfACargoShip.Cheater
+namespace FellOffACargoShip.Cheater
 {
     internal static class Mech
     {
@@ -72,7 +72,7 @@ namespace FellOfACargoShip.Cheater
                     return;
                 }
 
-                if (FellOfACargoShip.Settings.AddMechsSilently)
+                if (FellOffACargoShip.Settings.AddMechsSilently)
                 {
                     simGameState.AddItemStat(id, typeof(MechDef), false);
 

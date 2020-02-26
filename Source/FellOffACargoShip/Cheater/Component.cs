@@ -2,7 +2,7 @@
 using BattleTech;
 using HBS;
 
-namespace FellOfACargoShip.Cheater
+namespace FellOffACargoShip.Cheater
 {
     internal static class Component
     {

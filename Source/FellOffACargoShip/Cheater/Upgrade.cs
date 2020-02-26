@@ -5,7 +5,7 @@ using Harmony;
 using HBS;
 using HBS.Collections;
 
-namespace FellOfACargoShip.Cheater
+namespace FellOffACargoShip.Cheater
 {
     internal static class Upgrade
     {

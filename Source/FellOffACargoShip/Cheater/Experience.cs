@@ -4,7 +4,7 @@ using System.Linq;
 using BattleTech;
 using HBS;
 
-namespace FellOfACargoShip.Cheater
+namespace FellOffACargoShip.Cheater
 {
     internal static class Experience
     {
@@ -42,7 +42,7 @@ namespace FellOfACargoShip.Cheater
 
             List<string> pilotCallsigns = new List<string>();
 
-            simGameState.Commander.AddExperience(0, "FellOfACargoShip.AddXP", xp);
+            simGameState.Commander.AddExperience(0, "FellOffACargoShip.AddXP", xp);
             pilotCallsigns.Add(simGameState.Commander.Callsign);
 
             foreach (var item in simGameState.PilotRoster.Select((value, i) => new { i, value }))
@@ -50,7 +50,7 @@ namespace FellOfACargoShip.Cheater
                 Pilot pilot = item.value;
                 int index = item.i;
 
-                pilot.AddExperience(index, "FellOfACargoShip.AddXP", xp);
+                pilot.AddExperience(index, "FellOffACargoShip.AddXP", xp);
                 pilotCallsigns.Add(pilot.Callsign);
             }
 

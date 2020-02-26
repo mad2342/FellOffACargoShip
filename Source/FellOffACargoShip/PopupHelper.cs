@@ -3,11 +3,11 @@ using BattleTech.UI.TMProWrapper;
 using Harmony;
 using HBS;
 
-namespace FellOfACargoShip
+namespace FellOffACargoShip
 {
     internal static class PopupHelper
     {
-        private static string title = "Fell Of A Cargo Ship";
+        private static string title = "Fell Off A Cargo Ship";
 
         public static void Info(string message)
         {

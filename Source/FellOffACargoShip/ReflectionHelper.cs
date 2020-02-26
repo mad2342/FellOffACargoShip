@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection;
 
-namespace FellOfACargoShip
+namespace FellOffACargoShip
 {
     public static class ReflectionHelper
     {

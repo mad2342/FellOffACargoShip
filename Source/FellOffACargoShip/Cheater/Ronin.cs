@@ -5,7 +5,7 @@ using BattleTech;
 using Harmony;
 using HBS;
 
-namespace FellOfACargoShip.Cheater
+namespace FellOffACargoShip.Cheater
 {
     internal static class Ronin
     {

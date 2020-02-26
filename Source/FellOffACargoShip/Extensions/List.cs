@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace FellOfACargoShip.Extensions
+namespace FellOffACargoShip.Extensions
 {
     internal static class ListExtensions
     {

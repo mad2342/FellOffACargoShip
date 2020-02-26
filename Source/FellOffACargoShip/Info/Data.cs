@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FellOfACargoShip.Info
+namespace FellOffACargoShip.Info
 {
     internal static class Data
     {
@@ -28,37 +28,37 @@ namespace FellOfACargoShip.Info
             if (param == "all")
             {
                 dataProvider.ListAll();
-                message = $"Generated a clean list of all valid ArgoUpgradeIds, MechDefIds and ComponentDefIds in /Mods/FellOfACargoShip/FellOfACargoShip.log";
+                message = $"Generated a clean list of all valid ArgoUpgradeIds, MechDefIds and ComponentDefIds in /Mods/FellOffACargoShip/FellOffACargoShip.log";
             }
             else if (param == "argo")
             {
                 dataProvider.ListArgoUpgrades();
-                message = $"Generated a clean list of all valid ArgoUpgradeIds in /Mods/FellOfACargoShip/FellOfACargoShip.log";
+                message = $"Generated a clean list of all valid ArgoUpgradeIds in /Mods/FellOffACargoShip/FellOffACargoShip.log";
             }
             else if (param == "mechs")
             {
                 dataProvider.ListMechs();
-                message = $"Generated a clean list of all valid MechDefIds in /Mods/FellOfACargoShip/FellOfACargoShip.log";
+                message = $"Generated a clean list of all valid MechDefIds in /Mods/FellOffACargoShip/FellOffACargoShip.log";
             }
             else if (param == "weapons")
             {
                 dataProvider.ListWeapons();
-                message = $"Generated a clean list of all valid WeaponDefIds in /Mods/FellOfACargoShip/FellOfACargoShip.log";
+                message = $"Generated a clean list of all valid WeaponDefIds in /Mods/FellOffACargoShip/FellOffACargoShip.log";
             }
             else if (param == "upgrades")
             {
                 dataProvider.ListUpgrades();
-                message = $"Generated a clean list of all valid UpgradeDefIds in /Mods/FellOfACargoShip/FellOfACargoShip.log";
+                message = $"Generated a clean list of all valid UpgradeDefIds in /Mods/FellOffACargoShip/FellOffACargoShip.log";
             }
             else if (param == "heatsinks")
             {
                 dataProvider.ListHeatsinks();
-                message = $"Generated a clean list of all valid HeatsinkDefIds in /Mods/FellOfACargoShip/FellOfACargoShip.log";
+                message = $"Generated a clean list of all valid HeatsinkDefIds in /Mods/FellOffACargoShip/FellOffACargoShip.log";
             }
             else if (param == "ammo")
             {
                 dataProvider.ListAmmoBoxes();
-                message = $"Generated a clean list of all valid AmmoBoxDefIds in /Mods/FellOfACargoShip/FellOfACargoShip.log";
+                message = $"Generated a clean list of all valid AmmoBoxDefIds in /Mods/FellOffACargoShip/FellOffACargoShip.log";
             }
             else
             {

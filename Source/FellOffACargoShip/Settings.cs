@@ -1,4 +1,4 @@
-﻿namespace FellOfACargoShip
+﻿namespace FellOffACargoShip
 {
     internal class Settings
     {

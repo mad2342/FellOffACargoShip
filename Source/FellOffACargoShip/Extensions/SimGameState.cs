@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using BattleTech;
 
-namespace FellOfACargoShip.Extensions
+namespace FellOffACargoShip.Extensions
 {
     internal static class SimGameStateExtensions
     {

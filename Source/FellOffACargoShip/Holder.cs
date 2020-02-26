@@ -1,4 +1,4 @@
-﻿namespace FellOfACargoShip
+﻿namespace FellOffACargoShip
 {
     public static class Fields
     {

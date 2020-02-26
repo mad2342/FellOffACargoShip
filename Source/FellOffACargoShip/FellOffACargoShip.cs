@@ -11,9 +11,9 @@ using UnityEngine;
 using TMPro;
 using HBS;
 
-namespace FellOfACargoShip
+namespace FellOffACargoShip
 {
-    public static class FellOfACargoShip
+    public static class FellOffACargoShip
     {
         internal static string LogPath;
         internal static string ModDirectory;
@@ -24,9 +24,9 @@ namespace FellOfACargoShip
         public static void Init(string directory, string settings)
         {
             ModDirectory = directory;
-            LogPath = Path.Combine(ModDirectory, "FellOfACargoShip.log");
+            LogPath = Path.Combine(ModDirectory, "FellOffACargoShip.log");
 
-            Logger.Initialize(LogPath, DebugLevel, ModDirectory, nameof(FellOfACargoShip));
+            Logger.Initialize(LogPath, DebugLevel, ModDirectory, nameof(FellOffACargoShip));
 
             try
             {
@@ -39,7 +39,7 @@ namespace FellOfACargoShip
             }
 
             // Harmony calls need to go last here because their Prepare() methods directly check Settings...
-            HarmonyInstance harmony = HarmonyInstance.Create("de.mad.FellOfACargoShip");
+            HarmonyInstance harmony = HarmonyInstance.Create("de.mad.FellOffACargoShip");
             harmony.PatchAll(Assembly.GetExecutingAssembly());
         }
     }

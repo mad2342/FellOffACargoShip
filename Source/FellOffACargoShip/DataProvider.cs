@@ -3,7 +3,7 @@ using BattleTech;
 using HBS;
 using HBS.Data;
 
-namespace FellOfACargoShip
+namespace FellOffACargoShip
 {
     internal class DataProvider
     {
