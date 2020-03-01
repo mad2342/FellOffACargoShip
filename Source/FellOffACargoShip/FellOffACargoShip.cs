@@ -168,7 +168,7 @@ namespace FellOffACargoShip
                 Logger.Debug("[HeraldryNameWidget_SetData_PREFIX] Disable text validation, expand character limit");
 
                 HBS_InputField nameInput = (HBS_InputField)AccessTools.Field(typeof(HeraldryNameWidget), "nameInput").GetValue(__instance);
-                nameInput.characterLimit = 50;
+                nameInput.characterLimit = 80;
                 nameInput.contentType = HBS_InputField.ContentType.Standard;
                 nameInput.characterValidation = HBS_InputField.CharacterValidation.None;
             }
