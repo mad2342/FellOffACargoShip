@@ -204,69 +204,69 @@ namespace FellOffACargoShip
 
         public void ListArgoUpgrades()
         {
-            Logger.Debug("--- ArgoUpgradeIds");
+            Logger.Always("--- ArgoUpgradeIds");
             foreach (string id in ArgoUpgradeIds)
             {
-                Logger.Debug("\"" + id + "\",", false);
+                Logger.Always("\"" + id + "\",", false);
             }
-            Logger.Debug("---");
+            Logger.Always("---");
         }
 
         public void ListMechs()
         {
-            Logger.Debug("--- MechDefIds");
+            Logger.Always("--- MechDefIds");
             foreach (string id in MechDefIds)
             {
-                Logger.Debug("\"" + id + "\",", false);
+                Logger.Always("\"" + id + "\",", false);
             }
-            Logger.Debug("---");
+            Logger.Always("---");
         }
 
         public void ListWeapons()
         {
-            Logger.Debug("--- WeaponDefIds");
+            Logger.Always("--- WeaponDefIds");
             foreach (string id in WeaponDefIds)
             {
-                Logger.Debug("\"" + id + "\",", false);
+                Logger.Always("\"" + id + "\",", false);
             }
-            Logger.Debug("---");
+            Logger.Always("---");
         }
 
         public void ListUpgrades()
         {
-            Logger.Debug("--- UpgradeDefIds");
+            Logger.Always("--- UpgradeDefIds");
             foreach (string id in UpgradeDefIds)
             {
-                Logger.Debug("\"" + id + "\",", false);
+                Logger.Always("\"" + id + "\",", false);
             }
-            Logger.Debug("---");
+            Logger.Always("---");
         }
 
         public void ListHeatsinks()
         {
-            Logger.Debug("--- HeatSinkDefIds");
+            Logger.Always("--- HeatSinkDefIds");
             foreach (string id in HeatSinkDefIds)
             {
-                Logger.Debug("\"" + id + "\",", false);
+                Logger.Always("\"" + id + "\",", false);
             }
-            Logger.Debug("---");
+            Logger.Always("---");
         }
 
         public void ListAmmoBoxes()
         {
-            Logger.Debug("--- AmmoBoxDefIds");
+            Logger.Always("--- AmmoBoxDefIds");
             foreach (string id in AmmoBoxDefIds)
             {
-                Logger.Debug("\"" + id + "\",", false);
+                Logger.Always("\"" + id + "\",", false);
             }
-            Logger.Debug("---");
+            Logger.Always("---");
         }
 
         public void ListAll()
         {
-            Logger.Debug("------------------------------------------------------------------------------------------------------------------------");
-            Logger.Debug("[DataProvider_ListAll] Generate clean, json-ready list of all valid ArgoUpgrades, Mechs and Components.");
-            Logger.Debug("------------------------------");
+            Logger.Always("------------------------------------------------------------------------------------------------------------------------");
+            Logger.Always("[DataProvider_ListAll] Generate clean, json-ready list of all valid ArgoUpgrades, Mechs and Components.");
+            Logger.Always("------------------------------");
 
             // ArgoUpgrades
             ListArgoUpgrades();
@@ -286,8 +286,8 @@ namespace FellOffACargoShip
             // AmmoBoxes
             ListAmmoBoxes();
 
-            Logger.Debug("------------------------------");
-            Logger.Debug("------------------------------------------------------------------------------------------------------------------------");
+            Logger.Always("------------------------------");
+            Logger.Always("------------------------------------------------------------------------------------------------------------------------");
         }
     }
 }
