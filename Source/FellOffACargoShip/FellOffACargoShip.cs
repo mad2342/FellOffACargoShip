@@ -67,7 +67,7 @@ namespace FellOffACargoShip
                     return;
                 }
 
-                List<string> validCommands = new List<string>() { "/help", "/list", "/mech", "/comp", "/funds", "/xp", "/upgr", "/ronin", "/rep" };
+                List<string> validCommands = new List<string>() { "/help", "/list", "/mech", "/comp", "/funds", "/xp", "/upgr", "/ronin", "/rep", "/travel" };
                 string command = validCommands.FirstOrDefault(c => currentHeraldryName.Contains(c));
 
                 if (command != null)
@@ -136,6 +136,12 @@ namespace FellOffACargoShip
                         case "/ronin":
 
                             Cheater.Ronin.Add(param);
+
+                            return;
+
+                        case "/travel":
+
+                            Cheater.Travel.To(param);
 
                             return;
 

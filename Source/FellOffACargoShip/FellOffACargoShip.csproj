@@ -58,6 +58,7 @@
     <Compile Include="Cheater\Mech.cs" />
     <Compile Include="Cheater\Reputation.cs" />
     <Compile Include="Cheater\Ronin.cs" />
+    <Compile Include="Cheater\Travel.cs" />
     <Compile Include="Cheater\Upgrade.cs" />
     <Compile Include="DataProvider.cs" />
     <Compile Include="Extensions\List.cs" />
