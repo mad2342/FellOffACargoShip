@@ -6,5 +6,5 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyProduct("FellOffACargoShip")]
 [assembly: ComVisible(false)]
 [assembly: Guid("4BEF22EB-464D-4633-BD75-DE0CF0D71DD5")]
-[assembly: AssemblyVersion("1.9.0.*")]
+[assembly: AssemblyVersion("1.9.1.*")]
 
