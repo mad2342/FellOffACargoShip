@@ -41,7 +41,8 @@ namespace FellOffACargoShip
             "Weapon_Mortar_Thumper",
             "Weapon_Mortar_MechMortar",
             "Weapon_Autocannon_AC20_SPECIAL-Victoria",
-            "Weapon_Flamer_Flamer_SPECIAL-Victoria"
+            "Weapon_Flamer_Flamer_SPECIAL-Victoria",
+            "Weapon_Streak_Targeting_Laser"
         };
 
         private List<string> upgradeDefBlacklist = new List<string> {
