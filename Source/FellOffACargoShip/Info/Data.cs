@@ -16,6 +16,9 @@ namespace FellOffACargoShip.Info
                 help += "• Params: 'all', 'argo', 'mechs', 'weapons' 'upgrades', 'heatsinks', 'ammo'";
                 help += Environment.NewLine;
                 help += "• Example: '/list weapons'";
+                help += Environment.NewLine;
+                help += Environment.NewLine;
+                help += "Special case '/list variants' will explicitly output all identifiers for the '/mech' command";
                 PopupHelper.Info(help);
 
                 return;
@@ -39,6 +42,11 @@ namespace FellOffACargoShip.Info
             {
                 dataProvider.ListMechs();
                 message = $"Generated a clean list of all valid MechDefIds in /Mods/FellOffACargoShip/FellOffACargoShip.log";
+            }
+            else if (param == "variants")
+            {
+                dataProvider.ListVariants();
+                message = $"Generated a clean list of all valid mech variant names in /Mods/FellOffACargoShip/FellOffACargoShip.log";
             }
             else if (param == "weapons")
             {

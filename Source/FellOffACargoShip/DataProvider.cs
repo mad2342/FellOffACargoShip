@@ -139,6 +139,7 @@ namespace FellOffACargoShip
         };
 
         public List<string> MechDefIds = new List<string>();
+        public List<string> MechVariants = new List<string>();
         public List<string> WeaponDefIds = new List<string>();
         public List<string> UpgradeDefIds = new List<string>();
         public List<string> HeatSinkDefIds = new List<string>();
@@ -146,17 +147,21 @@ namespace FellOffACargoShip
 
         public DataProvider()
         {
-            // Collect Mechs
+            // Collect Mechs & Variants
             Logger.Debug("[DataProvider] Collecting all valid Mechs");
-            foreach (string chassisDefId in ChassisDefs.Keys)
+            foreach (KeyValuePair<string, ChassisDef> entry in ChassisDefs)
             {
-                if (!chassisDefBlacklist.Contains(chassisDefId))
+                if (!chassisDefBlacklist.Contains(entry.Key))
                 {
-                    string id = chassisDefId.Replace("chassisdef", "mechdef");
+                    string id = entry.Key.Replace("chassisdef", "mechdef");
+                    string variant = entry.Value.VariantName;
+
                     MechDefIds.Add(id);
+                    MechVariants.Add($"{variant} ({id})");
                 }
             }
             MechDefIds.Sort();
+            MechVariants.Sort();
 
             // Collect Weapons
             Logger.Debug("[DataProvider] Collecting all valid Weapons");
@@ -219,6 +224,16 @@ namespace FellOffACargoShip
             foreach (string id in MechDefIds)
             {
                 Logger.Always("\"" + id + "\",", false);
+            }
+            Logger.Always("---");
+        }
+
+        public void ListVariants()
+        {
+            Logger.Always("--- Variants");
+            foreach (string variant in MechVariants)
+            {
+                Logger.Always(variant, false);
             }
             Logger.Always("---");
         }
