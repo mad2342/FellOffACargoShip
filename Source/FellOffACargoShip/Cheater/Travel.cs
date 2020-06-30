@@ -6,10 +6,10 @@ namespace FellOffACargoShip.Cheater
 {
     internal static class Travel
     {
-        private static SimGameState simGameState = SceneSingletonBehavior<UnityGameInstance>.Instance.Game.Simulation;
-
         public static void To(string param)
         {
+            SimGameState simGameState = SceneSingletonBehavior<UnityGameInstance>.Instance.Game.Simulation;
+
             if (param == "help")
             {
                 string help = "";

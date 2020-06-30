@@ -9,10 +9,10 @@ namespace FellOffACargoShip.Cheater
 {
     internal static class Ronin
     {
-        private static SimGameState simGameState = SceneSingletonBehavior<UnityGameInstance>.Instance.Game.Simulation;
-
         public static void Add(string param)
         {
+            SimGameState simGameState = SceneSingletonBehavior<UnityGameInstance>.Instance.Game.Simulation;
+
             if (param == "help")
             {
                 string help = "";

@@ -6,11 +6,11 @@ namespace FellOffACargoShip.Cheater
 {
     internal static class Reputation
     {
-        // Factions: Davion, Liao, Kurita, Marik, Steiner, TaurianConcordat, MagistracyOfCanopus, AuriganPirates, MercenaryReviewBoard
-        private static SimGameState simGameState = SceneSingletonBehavior<UnityGameInstance>.Instance.Game.Simulation;
-
         public static void Add(string param)
         {
+            // Factions: Davion, Liao, Kurita, Marik, Steiner, TaurianConcordat, MagistracyOfCanopus, AuriganPirates, MercenaryReviewBoard
+            SimGameState simGameState = SceneSingletonBehavior<UnityGameInstance>.Instance.Game.Simulation;
+
             if (param == "help")
             {
                 string help = "";

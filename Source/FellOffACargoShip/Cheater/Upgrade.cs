@@ -9,11 +9,11 @@ namespace FellOffACargoShip.Cheater
 {
     internal static class Upgrade
     {
-        private static SimGameState simGameState = SceneSingletonBehavior<UnityGameInstance>.Instance.Game.Simulation;
-        private static DataProvider dataProvider = new DataProvider();
-
         public static void Add(string param)
         {
+            SimGameState simGameState = SceneSingletonBehavior<UnityGameInstance>.Instance.Game.Simulation;
+            DataProvider dataProvider = new DataProvider();
+
             if (param == "help")
             {
                 string help = "";
