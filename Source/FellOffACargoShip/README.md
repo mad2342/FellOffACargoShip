@@ -8,6 +8,7 @@ Type `/help` to get a list of all available commands and go from there.
 
 ## Settings
 `AddMechsSilently` controls whether the Mech placement popup will be used for adding a Mech (false) or if the Mech will be added to storage silently (true).
+NOTE that silently adding Mechs to storage will spawn them *without* their equipment.
 
 ## Examples
 * Available commands are `/list`, `/mech`, `/comp`, `/funds`, `/xp`, `/upgr`, `/ronin`, `/rep` and `/travel`
