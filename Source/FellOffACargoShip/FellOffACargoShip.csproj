@@ -53,6 +53,7 @@
       <Link>MadLogger.cs</Link>
     </Compile>
     <Compile Include="Cheater\Component.cs" />
+    <Compile Include="Cheater\Event.cs" />
     <Compile Include="Cheater\Experience.cs" />
     <Compile Include="Cheater\Funds.cs" />
     <Compile Include="Cheater\Mech.cs" />
