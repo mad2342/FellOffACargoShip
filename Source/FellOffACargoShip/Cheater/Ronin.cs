@@ -29,9 +29,9 @@ namespace FellOffACargoShip.Cheater
             }
 
 
-
             int pilotsToAddCount = simGameState.GetMaxMechWarriors() - simGameState.PilotRoster.Count;
 
+            Logger.Debug($"[Cheater_Ronin_Add] param='{param}' vacant_banks={pilotsToAddCount}");
             if (pilotsToAddCount <= 0)
             {
                 string message = $"No space left in roster.";
@@ -56,7 +56,7 @@ namespace FellOffACargoShip.Cheater
             else
             {
                 // Allow to add by id or callsign (ie: "/ronin pilot_backer_Eck" or "/ronin Eck")
-                PilotDef pilotDef = simGameState.DataManager.PilotDefs.FirstOrDefault(kvp => kvp.Key == param || kvp.Value.Description.Callsign == param || kvp.Value.Description.Callsign.ToLower() == param).Value;
+                PilotDef pilotDef = simGameState.DataManager.PilotDefs.FirstOrDefault(kvp => kvp.Key == param || kvp.Value.Description.Callsign == param || kvp.Value.Description.Callsign?.ToLower() == param).Value;
                 if (pilotDef != null) 
                 //if (simGameState.DataManager.PilotDefs.TryGet(param, out PilotDef pilotDef))
                 {
