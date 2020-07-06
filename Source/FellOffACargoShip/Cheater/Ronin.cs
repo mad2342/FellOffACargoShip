@@ -29,9 +29,9 @@ namespace FellOffACargoShip.Cheater
             }
 
 
+
             int pilotsToAddCount = simGameState.GetMaxMechWarriors() - simGameState.PilotRoster.Count;
 
-            Logger.Debug($"[Cheater_Ronin_Add] param='{param}' vacant_banks={pilotsToAddCount}");
             if (pilotsToAddCount <= 0)
             {
                 string message = $"No space left in roster.";
