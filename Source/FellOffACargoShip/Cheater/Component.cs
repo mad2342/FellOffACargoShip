@@ -105,6 +105,18 @@ namespace FellOffACargoShip.Cheater
                     Logger.Debug($"[Cheater_Component_Add] Added {id}({count}) to inventory.");
                 }
 
+                // Add JumpJets
+                foreach (string id in dataProvider.JumpJetDefIds)
+                {
+                    int i = 0;
+                    while (i < count)
+                    {
+                        simGameState.AddItemStat(id, typeof(JumpJetDef), false);
+                        i++;
+                    }
+                    Logger.Debug($"[Cheater_Component_Add] Added {id}({count}) to inventory.");
+                }
+
                 message = $"Added {count} pieces of all known components to inventory.";
                 Logger.Debug($"[Cheater_Component_Add] {message}");
                 PopupHelper.Info(message);
@@ -132,6 +144,11 @@ namespace FellOffACargoShip.Cheater
                 else if (dataProvider.AmmoBoxDefIds.Contains(componentDefId))
                 {
                     componentType = typeof(AmmunitionBoxDef);
+                }
+                // JumpJet
+                else if (dataProvider.JumpJetDefIds.Contains(componentDefId))
+                {
+                    componentType = typeof(JumpJetDef);
                 }
                 else
                 {

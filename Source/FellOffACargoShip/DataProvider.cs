@@ -14,6 +14,7 @@ namespace FellOffACargoShip
         private IDataItemStore<string, UpgradeDef> UpgradeDefs = simGameState.DataManager.UpgradeDefs;
         private IDataItemStore<string, HeatSinkDef> HeatSinkDefs = simGameState.DataManager.HeatSinkDefs;
         private IDataItemStore<string, AmmunitionBoxDef> AmmoBoxDefs = simGameState.DataManager.AmmoBoxDefs;
+        private IDataItemStore<string, JumpJetDef> JumpJetDefs = simGameState.DataManager.JumpJetDefs;
 
         private List<string> chassisDefBlacklist = new List<string> {
             "chassisdef_atlas_AS7-GG",
@@ -80,6 +81,11 @@ namespace FellOffACargoShip
             "Ammo_AmmunitionBox_Generic_SRM_HalfTon"
         };
 
+        private List<string> jumpJetDefBlacklist = new List<string>
+        {
+            "Gear_JumpJet_Vectored_Thrust_Kit"
+        };
+
         public List<string> ArgoUpgradeIds = new List<string>()
         {
             "argoUpgrade_drive0",
@@ -144,6 +150,7 @@ namespace FellOffACargoShip
         public List<string> UpgradeDefIds = new List<string>();
         public List<string> HeatSinkDefIds = new List<string>();
         public List<string> AmmoBoxDefIds = new List<string>();
+        public List<string> JumpJetDefIds = new List<string>();
 
         public DataProvider()
         {
@@ -206,6 +213,17 @@ namespace FellOffACargoShip
                 }
             }
             AmmoBoxDefIds.Sort();
+
+            // Collect Jumpjets
+            Logger.Debug("[DataProvider] Collecting all valid Jumpjets");
+            foreach (string id in JumpJetDefs.Keys)
+            {
+                if (!jumpJetDefBlacklist.Contains(id))
+                {
+                    JumpJetDefIds.Add(id);
+                }
+            }
+            JumpJetDefIds.Sort();
         }
 
         public void ListArgoUpgrades()
@@ -278,6 +296,16 @@ namespace FellOffACargoShip
             Logger.Always("---");
         }
 
+        public void ListJumpJets()
+        {
+            Logger.Always("--- JumpJetDefIds");
+            foreach (string id in JumpJetDefIds)
+            {
+                Logger.Always("\"" + id + "\",", false);
+            }
+            Logger.Always("---");
+        }
+
         public void ListAll()
         {
             Logger.Always("------------------------------------------------------------------------------------------------------------------------");
@@ -301,6 +329,9 @@ namespace FellOffACargoShip
 
             // AmmoBoxes
             ListAmmoBoxes();
+
+            // Jumpjets
+            ListJumpJets();
 
             Logger.Always("------------------------------");
             Logger.Always("------------------------------------------------------------------------------------------------------------------------");

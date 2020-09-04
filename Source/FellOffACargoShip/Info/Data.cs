@@ -13,7 +13,7 @@ namespace FellOffACargoShip.Info
                 string help = "";
                 help += "• This command will output json ready lists of data in logfile";
                 help += Environment.NewLine;
-                help += "• Params: 'all', 'argo', 'mechs', 'weapons' 'upgrades', 'heatsinks', 'ammo'";
+                help += "• Params: 'all', 'argo', 'mechs', 'weapons' 'upgrades', 'heatsinks', 'ammo', 'jumpjets'";
                 help += Environment.NewLine;
                 help += "• Example: '/list weapons'";
                 help += Environment.NewLine;
@@ -67,6 +67,11 @@ namespace FellOffACargoShip.Info
             {
                 dataProvider.ListAmmoBoxes();
                 message = $"Generated a clean list of all valid AmmoBoxDefIds in /Mods/FellOffACargoShip/FellOffACargoShip.log";
+            }
+            else if (param == "jumpjets")
+            {
+                dataProvider.ListJumpJets();
+                message = $"Generated a clean list of all valid JumpJetDefIds in /Mods/FellOffACargoShip/FellOffACargoShip.log";
             }
             else
             {
