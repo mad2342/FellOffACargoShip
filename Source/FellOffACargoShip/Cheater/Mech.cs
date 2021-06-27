@@ -19,19 +19,36 @@ namespace FellOffACargoShip.Cheater
                 help += Environment.NewLine;
                 help += "• Params: the variant name of the desired mech";
                 help += Environment.NewLine;
-                help += "• Example: '/mech WHM-6R'";
+                help += "• Example: '/mech warhammer_WHM-6R'";
                 PopupHelper.Info(help);
 
                 return;
             }
 
-            // Special interest
+            // Special interests
             if (param == "bourbon")
             {
                 foreach (string id in dataProvider.BourbonCustomMechIds)
                 {
                     AddMech(id, true);
                 }
+                return;
+            }
+            if (param == "special")
+            {
+                foreach (string id in dataProvider.SpecialGearMechIds)
+                {
+                    AddMech(id, true);
+                }
+                return;
+            }
+
+
+
+            // Shortcut if param already is a proper mechdef id
+            if (simGameState.DataManager.MechDefs.Exists(param))
+            {
+                simGameState.AddMechByID(param, true);
                 return;
             }
 
@@ -41,7 +58,9 @@ namespace FellOffACargoShip.Cheater
             // Even in SimGameState.AddMech this would be called with a MechDef (which doesn't work)
             // Currently all calls to SimGameState.AddMech seem to use params that won't get to that place
             // In SimGameState.UnreadyMech it's called with a MechDef.Chassis.Description.Id and works correctly
-            string chassisId = simGameState.GetChassisIdFromVariantName(param.ToUpper());
+
+            //string chassisId = simGameState.GetChassisIdFromVariantName(param.ToUpper());
+            string chassisId = simGameState.GetChassisIdFromVariantName(param);
 
             if (chassisId == null)
             {

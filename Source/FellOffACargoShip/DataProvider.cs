@@ -54,17 +54,18 @@ namespace FellOffACargoShip
             "Gear_General_Intercept_System",
             "Gear_General_GM_Ballistic_Siege_Compensators",
             "Gear_General_Close_Quarters_Combat_Suite",
-            "Gear_Sensor_Prototype_ECM",
             "Gear_General_Optimized_Capacitors",
-            "Gear_Sensor_Prototype_ActiveProbe",
             "Gear_Sensor_Prototype_EWE",
+            "Gear_Structure_Prototype_TSM",
             "Gear_Mortar_Thumper",
             "Gear_Mortar_MechMortar",
             "TargetDummyMod",
             "Gear_Cockpit_Tacticon_B2000_Battle_Computer",
+            "Gear_General_Advanced_Command_Module",
             "Gear_General_Company_Command_Module",
             "Gear_General_Lance_Command_Module",
-            "Gear_General_Robinson_TG120_Drive_Train"
+            "Gear_General_Robinson_TG120_Drive_Train",
+            "Gear_Sensor_Beagle_ActiveProbe"
         };
 
         private List<string> heatSinkDefBlacklist = new List<string>
@@ -127,21 +128,50 @@ namespace FellOffACargoShip
 
         public List<string> BourbonCustomMechIds = new List<string>()
         {
+            "mechdef_cataphract_CTF-3D",
             "mechdef_catapult_CPLT-C1b",
             "mechdef_dragon_DRG-1N_BUSTEDUP",
             "mechdef_griffin_GRF-1N_DECOMMISSIONED",
+            "mechdef_hunchback_HBK-2",
+            "mechdef_jagermech_JM6-DD",
+            "mechdef_kingcrab_KGC-000b",
             "mechdef_kintaro_KTO-19b",
             "mechdef_locust_LCT-1Vb",
             "mechdef_locust_LCT-1Vb_DAMAGED",
+            "mechdef_marauder_MAD-4A",
+            "mechdef_marauder_MAD-5A",
             "mechdef_orion_ON2-Mb",
             "mechdef_shadowhawk_SHD-2Hb",
             "mechdef_shadowhawk_SHD-2Hb_DAMAGED",
             "mechdef_thunderbolt_TDR-5Sb",
+            "mechdef_trebuchet_TBT-3C",
             "mechdef_warhammer_WHM-6Rb",
+            "mechdef_wolverine_WVR-7H",
             "mechdef_zeus_ZEU-5S",
             "mechdef_crab_CRB-27sl",
+            "mechdef_stalker_STK-3Fb",
+            "mechdef_annihilator_ANH-1X",
             "mechdef_annihilator_ANH-2A",
-            "mechdef_archer_ARC-2Rb"
+            "mechdef_archer_ARC-2Rb",
+            "mechdef_rifleman_RFL-3N-2"
+        };
+
+        public List<string> SpecialGearMechIds = new List<string>()
+        {
+            "mechdef_cyclops_CP-10-HQ",
+            "mechdef_hatchetman_HCT-3X",
+            "mechdef_cataphract_CTF-0X",
+            "mechdef_raven_RVN-3X",
+            "mechdef_annihilator_ANH-1A",
+            "mechdef_archer_ARC-2R",
+            "mechdef_assassin_ASN-21",
+            "mechdef_bullshark_BSK-MAZ",
+            "mechdef_flea_FLE-4",
+            "mechdef_phoenixhawk_PXH-1",
+            "mechdef_rifleman_RFL-3C",
+            "mechdef_vulcan_VL-2T",
+            "mechdef_marauder_MAD-3R",
+            "mechdef_warhammer_WHM-6R"
         };
 
         public List<string> MechDefIds = new List<string>();

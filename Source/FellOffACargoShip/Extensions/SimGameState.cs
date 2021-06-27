@@ -12,7 +12,14 @@ namespace FellOffACargoShip.Extensions
                 string chassisId = chassisDefs.Key;
                 ChassisDef chassisDef = chassisDefs.Value;
 
+                /*
                 if (chassisDef.VariantName == variant || chassisDef.VariantName.ToUpper() == variant)
+                {
+                    return chassisDef.Description.Id;
+                }
+                */
+
+                if (chassisId == $"chassisdef_{variant}")
                 {
                     return chassisDef.Description.Id;
                 }

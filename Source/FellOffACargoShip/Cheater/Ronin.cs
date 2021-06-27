@@ -41,7 +41,7 @@ namespace FellOffACargoShip.Cheater
                 return;
             }
 
-            if (param == "all")
+            if (param == "All" || param == "all")
             {
                 for (int i = 0; i < pilotsToAddCount; i++)
                 {
