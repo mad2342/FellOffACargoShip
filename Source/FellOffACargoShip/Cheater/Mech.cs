@@ -45,7 +45,7 @@ namespace FellOffACargoShip.Cheater
 
 
 
-            // Shortcut if param already is a proper mechdef id
+            // Shortcut if param already is a proper mechdef
             if (simGameState.DataManager.MechDefs.Exists(param))
             {
                 simGameState.AddMechByID(param, true);
